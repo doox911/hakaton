@@ -1,0 +1,22 @@
+$finex-color: #8d7045;
+
+.finex--text {
+  color: $finex-color;
+}
+
+.finex--bg {
+  background-color: $finex-color;
+}
+
+.user-select-none {
+  user-select: none;
+}
+
+/**
+ * Устанавливает цвет finex для иконки, когда свёрнута группа
+ *
+ * @TODO #Junior Найти способ сделать через Vuetify
+ */
+.v-navigation-drawer .v-list-group__header__append-icon .v-icon {
+  color: #8d7045 !important;
+}
