@@ -13,4 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/wiki', function () {
+  dd('wiki');
+});
+
 Route::get('/{any}', 'FrontendController@index')->where('any', '.*');
