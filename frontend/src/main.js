@@ -6,6 +6,26 @@ import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
 import './assets/index.scss';
+import 'viewerjs/dist/viewer.css';
+import VueViewer from 'v-viewer';
+
+Vue.use(VueViewer);
+
+VueViewer.setDefaults({
+  inline: false,
+  button: true,
+  navbar: false,
+  title: false,
+  toolbar: false,
+  tooltip: false,
+  movable: true,
+  zoomable: true,
+  rotatable: false,
+  scalable: true,
+  transition: true,
+  fullscreen: true,
+  keyboard: true,
+});
 
 Vue.config.productionTip = false;
 
