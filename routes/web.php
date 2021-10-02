@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/duck', static function () {
-  $res = (new DuckDuckGoArticleSearch())->search('funny moments animal videos');
+  $res = (new DuckDuckGoArticleSearch())->search('apple');
   dd($res);
 });
 
