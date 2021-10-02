@@ -8,7 +8,9 @@ use App\Classes\WikiSearch;
 use App\Classes\YandexSearch;
 use App\Classes\YouTubeSearch;
 use App\Http\Requests\SearchRequest;
+use App\Http\Resources\SearchResult;
 use Illuminate\Http\JsonResponse;
+use ReflectionClass;
 
 class SearchController {
 
@@ -60,7 +62,7 @@ class SearchController {
           if (in_array($key, $data['searchers'])) {
             $searcher = new $searcher;
             if (isset($result[$content_type])) {
-              $result[$content_type] = array_merge($result[$content_type], $searcher->search($data['search']));
+              $result[$content_type] = $result[$content_type]->merge($searcher->search($data['search']));
             } else {
               $result[$content_type] = $searcher->search($data['search']);
             }
@@ -73,6 +75,10 @@ class SearchController {
     if (empty($result)) {
       $code = self::NO_CONTENT_CODE;
     }
+
+    // foreach ($result as $content_type => $items) {
+    //   $result[$content_type] = SearchResult::collection($items);
+    // }
 
     return response()->json([
       'content' => $result
