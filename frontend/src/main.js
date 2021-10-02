@@ -9,10 +9,29 @@ import './assets/index.scss';
 
 Vue.config.productionTip = false;
 
+if (!String.prototype.splice) {
+
+  /**
+   * The splice() method changes the content of a string by removing a range of
+   * characters and/or adding new characters.
+   *
+   * @this {String}
+   * @param {number} start Index at which to start changing the string.
+   * @param {number} delete_count An integer indicating the number of old chars to remove.
+   * @param {string} import_string The String that is spliced in.
+   * @return {string} A new string with the spliced substring.
+   */
+  // eslint-disable-next-line no-extend-native
+  String.prototype.splice = function(start, delete_count, import_string) {
+    return this.slice(0, start) + import_string + this.slice(start + Math.abs(delete_count));
+  };
+}
+
 /**
  * @param {function} callback
  */
-function hidePreloadContainer(callback = () => {}) {
+function hidePreloadContainer(callback = () => {
+}) {
   const element = document.querySelector('.ipril-container');
 
   setTimeout(() => {
