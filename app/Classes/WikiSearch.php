@@ -3,11 +3,8 @@
 namespace App\Classes;
 
 use App\Abstractions\AbstractSearch;
-use App\Http\Resources\SearchResult;
 use DiDom\Document;
-use DiDom\Exceptions\InvalidSelectorException;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Collection;
 
 /**
  * Wikipedia scrapper
@@ -24,11 +21,11 @@ class WikiSearch extends AbstractSearch {
 
   /**
    * @param string $search_string
-   * @return AnonymousResourceCollection
-   * @throws InvalidSelectorException
-   * @throws GuzzleException
+   * @return \Illuminate\Support\Collection
+   * @throws \DiDom\Exceptions\InvalidSelectorException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function search(string $search_string): AnonymousResourceCollection {
+  public function search(string $search_string): Collection {
     $items = collect();
 
     $search_string = mb_strtolower($search_string);
@@ -59,7 +56,7 @@ class WikiSearch extends AbstractSearch {
       // удаляем не нужные элементы
       collect($article_page_document->find('[role=navigation]'))->each->remove();
       collect($article_page_document->find('.mw-editsection'))->each->remove();
-      collect($article_page_document->find('.mw-parser-output'))->each->remove();
+      //collect($article_page_document->find('.mw-parser-output'))->each->remove();
       collect($article_page_document->find('sup.reference'))->each->remove();
       collect($article_page_document->find('style'))->each->remove();
       collect($article_page_document->find('script'))->each->remove();
@@ -67,7 +64,7 @@ class WikiSearch extends AbstractSearch {
 
       $article = (object)[
         'title' => $article_page_document->first('h1.firstHeading')->text(),
-        'content' => $article_page_document->first('.mw-body-content')->text(),
+        'content' => html_entity_decode($article_page_document->first('.mw-body-content')->text()),
         'type' => 'text',
         'source' => $link,
         'source_type' => strtolower(self::class),
@@ -76,6 +73,6 @@ class WikiSearch extends AbstractSearch {
       $items->push($article);
     }
 
-    return SearchResult::collection($items);
+    return $items;
   }
 }

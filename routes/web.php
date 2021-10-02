@@ -4,6 +4,7 @@ use App\Classes\DuckDuckGoArticleSearch;
 use App\Classes\ImagesWikiSearch;
 use App\Classes\RamblerSearch;
 use App\Classes\WikiSearch;
+use App\Classes\YouTubeSearch;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,15 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('yt', static function(){
+  $res = (new YouTubeSearch())->search('iphone 13');
+  dd($res);
+});
 
-Route::get('/duck', static function () {
-  $res = (new DuckDuckGoArticleSearch())->search('apple');
+Route::get('duck', static function () {
+  $res = (new DuckDuckGoArticleSearch())->search('лермонтов');
   dd($res);
 });
 
 Route::get('/wiki', static function () {
-  $res = (new RamblerSearch)->search('учи ру');
-  //$res = (new WikiSearch)->search('nano nano');
+  //$res = (new RamblerSearch)->search('учи ру');
+  $res = (new WikiSearch)->search('nano nano');
   //$res = (new ImagesWikiSearch)->search('Серпухов');
   dd($res);
 });

@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Collection;
 
 /**
  * Интерфейс для классов поиска
@@ -10,11 +10,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
  */
 interface ISearch {
 
-    /**
-     * function for search
-     *
-     * @param string $search_string
-     * @return AnonymousResourceCollection
-     */
-    public function search(string $search_string): AnonymousResourceCollection;
+  /**
+   * function for search
+   *
+   * @param string $search_string
+   * @return \Illuminate\Support\Collection
+   */
+    public function search(string $search_string): Collection;
 }
