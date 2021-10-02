@@ -24,11 +24,14 @@
           <v-card-text>
             <v-row>
               <v-col>
-                <a :href="video.source" target="_blank">
+                <a
+                  :href="video.source"
+                  target="_blank"
+                >
                   <img
                     :src="`${video.image_url}`"
                     style="width:100%; height: 200px;"
-                  />
+                  >
                 </a>
               </v-col>
             </v-row>

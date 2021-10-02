@@ -1,5 +1,8 @@
 <template>
-  <viewer v-if="!loading && images.length" :images="images">
+  <viewer
+    v-if="!loading && images.length"
+    :images="images"
+  >
     <v-container>
       <v-row>
         <v-col>
