@@ -7,11 +7,9 @@ use App\Classes\ImagesWikiSearch;
 use App\Classes\RamblerSearch;
 use App\Classes\WikiSearch;
 use App\Classes\YandexSearch;
-use App\Classes\YouTubeSearch;
+use App\Classes\RuTubeSearch;
 use App\Http\Requests\SearchRequest;
-use App\Http\Resources\SearchResult;
 use Illuminate\Http\JsonResponse;
-use ReflectionClass;
 
 class SearchController {
 
@@ -26,7 +24,7 @@ class SearchController {
   private const NO_CONTENT_CODE = 204;
 
   private const video_searchers = [
-    'youtube' => YouTubeSearch::class,
+    'rutube' => RuTubeSearch::class,
   ];
 
   private const image_searchers = [
