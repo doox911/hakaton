@@ -155,10 +155,6 @@
     user-select: none;
   }
 
-  .press-start-2p-font {
-    font-family: 'Press Start 2P', cursive;
-  }
-
   .ipril-color .v-text-field__slot > input {
     color: #81D4FA !important;
   }

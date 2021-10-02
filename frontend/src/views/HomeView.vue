@@ -3,7 +3,10 @@
     <v-container>
       <v-row>
         <v-col>
-          <ipril-search />
+          <ipril-search
+            v-model="search"
+            @click="runSearch"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -20,10 +23,22 @@
       IprilSearch,
     },
 
+    data() {
+      return {
+        search: '',
+      };
+    },
+
     mounted() {
       if (localStorage.getItem('user_id') === null) {
         this.$router.push('/welcome');
       }
+    },
+
+    methods: {
+      runSearch() {
+        console.log('runSearch', this.$axios);
+      },
     },
   };
 </script>
