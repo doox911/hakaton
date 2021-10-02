@@ -8,6 +8,7 @@ use DiDom\Document;
 use DiDom\Exceptions\InvalidSelectorException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Collection;
 use Throwable;
 
 /**
@@ -29,7 +30,7 @@ class RamblerSearch extends AbstractSearch {
    * @throws InvalidSelectorException
    * @throws GuzzleException
    */
-  public function search(string $search_string): AnonymousResourceCollection {
+  public function search(string $search_string): Collection {
     $items = collect();
 
     $search_string = mb_strtolower($search_string);
