@@ -67,9 +67,10 @@ class WikiSearch extends AbstractSearch {
 
       $article = (object)[
         'title' => $article_page_document->first('h1.firstHeading')->text(),
-        'content' => html_entity_decode($article_page_document->first('.mw-body-content')->text()),
+        'content' => $article_page_document->first('.mw-body-content')->text(),
         'type' => 'text',
         'source' => $link,
+        'source_type' => strtolower(self::class),
       ];
 
       $items->push($article);
