@@ -7,19 +7,19 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
 
 class SearchResult extends JsonResource {
-    /**
-     * Transform the resource into an array.
-     * {
-     *  title: string, - Заголовок контента
-     *  content: string - контент
-     *  type: string, - тип контента
-     *  source: string - источник контента
-     * }
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
-    public function toArray($request): array|JsonSerializable|Arrayable {
+  /**
+   * Transform the resource into an array.
+   * {
+   *  title: string, - Заголовок контента
+   *  content: string - контент
+   *  type: string, - тип контента
+   *  source: string - источник контента
+   * }
+   *
+   * @param \Illuminate\Http\Request $request
+   * @return array
+   */
+    public function toArray($request): array {
 
         $search_result = $this->resource;
 

@@ -5,7 +5,7 @@ namespace App\Abstractions;
 use App\Contracts\ISearch;
 use App\Services\ProxyService;
 use GuzzleHttp\Client;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Collection;
 
 abstract class AbstractSearch implements ISearch {
 
@@ -39,5 +39,5 @@ abstract class AbstractSearch implements ISearch {
   }
 
 
-  abstract public function search(string $search_string): AnonymousResourceCollection;
+  abstract public function search(string $search_string): Collection;
 }

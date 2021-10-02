@@ -3,9 +3,8 @@
 namespace App\Classes;
 
 use App\Abstractions\AbstractSearch;
-use App\Http\Resources\SearchResult;
 use DiDom\Document;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Collection;
 
 /**
  * DuckDuckGo scrapper
@@ -17,7 +16,7 @@ class DuckDuckGoArticleSearch extends AbstractSearch {
   protected static string $base_url = 'https://duckduckgo.com/html/?q=%s&kl=ru-ru';
   protected static string $base_json_url = 'https://api.duckduckgo.com/?q=%s&format=json&pretty=1&kl=ru-ru';
 
-  public function search(string $search_string): AnonymousResourceCollection {
+  public function search(string $search_string): Collection {
     $articles = collect();
 
     $search_string = mb_strtolower($search_string);
@@ -81,6 +80,6 @@ class DuckDuckGoArticleSearch extends AbstractSearch {
       $articles->push($article);
     }
 
-    return SearchResult::collection($articles);
+    return $articles;
   }
 }

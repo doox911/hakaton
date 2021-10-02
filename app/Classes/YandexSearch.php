@@ -3,8 +3,7 @@
 namespace App\Classes;
 
 use App\Abstractions\AbstractSearch;
-use App\Http\Resources\SearchResult;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Collection;
 
 /**
  * Yandex scrapper
@@ -13,11 +12,11 @@ class YandexSearch extends AbstractSearch {
 
     protected static string $url = 'https://yandex.ru/';
 
-    public function search(string $search_string): AnonymousResourceCollection {
+    public function search(string $search_string): Collection {
         $articles = collect();
 
         // TODO: Implement search() method.
 
-        return SearchResult::collection($articles);
+        return $articles;
     }
 }

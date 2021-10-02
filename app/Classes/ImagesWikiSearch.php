@@ -3,11 +3,8 @@
 namespace App\Classes;
 
 use App\Abstractions\AbstractSearch;
-use App\Http\Resources\SearchResult;
 use DiDom\Document;
-use DiDom\Exceptions\InvalidSelectorException;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Collection;
 
 /**
  * Картинки с википедии
@@ -17,11 +14,11 @@ class ImagesWikiSearch extends AbstractSearch  {
 
   /**
    * @param string $search_string
-   * @return AnonymousResourceCollection
-   * @throws InvalidSelectorException
-   * @throws GuzzleException
+   * @return \Illuminate\Support\Collection
+   * @throws \DiDom\Exceptions\InvalidSelectorException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function search(string $search_string): AnonymousResourceCollection {
+  public function search(string $search_string): Collection {
     $items = collect();
 
     $search_string = mb_strtolower($search_string);
@@ -64,6 +61,6 @@ class ImagesWikiSearch extends AbstractSearch  {
       }
     }
 
-    return SearchResult::collection($items);
+    return $items;
   }
 }
