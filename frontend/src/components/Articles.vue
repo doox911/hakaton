@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row v-if="!loading">
       <v-col>
         <h2 class="press-start-2p-font user-select-none ipril-text-color">
           Статьи

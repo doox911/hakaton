@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row v-if="!loading">
       <v-col>
         <h2 class="press-start-2p-font user-select-none ipril-text-color">
           Изображения
@@ -57,13 +57,6 @@
           @click="addThreeImages"
           v-text="`Показать ещё`"
         />
-      </v-col>
-    </v-row>
-    <v-row v-if="loading">
-      <v-col>
-        <h3 class="user-select-none press-start-2p-font ipril-text-color">
-          {{ name }}, я в поиске...
-        </h3>
       </v-col>
     </v-row>
   </v-container>
