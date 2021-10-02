@@ -57,6 +57,9 @@ class RamblerSearch extends AbstractSearch {
       }
     }
 
+    $founded_links = collect(['https://uchi.ru/']);
+
+
     // парсим найденные ссылки и собираем результаты в объекты
     foreach ($founded_links as $link) {
       try {
@@ -69,27 +72,20 @@ class RamblerSearch extends AbstractSearch {
 
       $article_page_document = new Document($response_html);
 
-      $title_object = $article_page_document->first('meta[name=title]');
       $description_object = $article_page_document->first('meta[name=description]');
 
-      dd($article_page_document->first('head'));
-      $title = '';
       $content = '';
-
-      if ($title_object) {
-        $title = $title_object->attr('content');
-      }
 
       if ($description_object) {
         $content = $description_object->attr('content');
       }
 
-      if (empty($title) || empty($content)) {
+      if (empty($content)) {
         continue;
       }
 
       $article = (object)[
-        'title' => $title,
+        'title' => $article_page_document->first('title')->text(),
         'content' => $content,
         'type' => 'text',
         'source' => $link,

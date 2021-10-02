@@ -24,8 +24,8 @@ Route::get('/duck', static function () {
 });
 
 Route::get('/wiki', static function () {
-  //$res = (new RamblerSearch)->search('учи ру');
-  $res = (new WikiSearch)->search('nano nano');
+  $res = (new RamblerSearch)->search('учи ру');
+  //$res = (new WikiSearch)->search('nano nano');
   //$res = (new ImagesWikiSearch)->search('Серпухов');
   dd($res);
 });
