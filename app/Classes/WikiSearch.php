@@ -59,7 +59,7 @@ class WikiSearch extends AbstractSearch {
       // удаляем не нужные элементы
       collect($article_page_document->find('[role=navigation]'))->each->remove();
       collect($article_page_document->find('.mw-editsection'))->each->remove();
-      collect($article_page_document->find('.mw-parser-output'))->each->remove();
+      //collect($article_page_document->find('.mw-parser-output'))->each->remove();
       collect($article_page_document->find('sup.reference'))->each->remove();
       collect($article_page_document->find('style'))->each->remove();
       collect($article_page_document->find('script'))->each->remove();
@@ -67,7 +67,7 @@ class WikiSearch extends AbstractSearch {
 
       $article = (object)[
         'title' => $article_page_document->first('h1.firstHeading')->text(),
-        'content' => $article_page_document->first('.mw-body-content')->text(),
+        'content' => html_entity_decode($article_page_document->first('.mw-body-content')->text()),
         'type' => 'text',
         'source' => $link,
         'source_type' => strtolower(self::class),
