@@ -12,9 +12,15 @@
       </v-row>
       <v-row>
         <v-col>
+          Content
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
           <ipril-bottom-sheet
             v-model="bottom_sheet"
-            @filters="setFilters"
+            @selected-filters="setSelectedFilters"
+            @selected-searchers="setSelectedSearchers"
           />
         </v-col>
       </v-row>
@@ -38,6 +44,14 @@
       return {
         search: '',
         bottom_sheet: false,
+        selected_filters: ['article'],
+        selected_searchers: ['wiki'],
+
+        find: {
+          article: [],
+          image: [],
+          video: [],
+        },
       };
     },
 
@@ -50,16 +64,8 @@
     methods: {
       async runSearch() {
         console.log('runSearch', await this.$axios.post('/api/search', {
-          filters: [
-            'video',
-            'article',
-            'image',
-          ],
-          searchers: [
-            'youtube',
-            'wiki',
-            'image_wiki',
-          ],
+          filters: this.selected_filters,
+          searchers: this.selected_searchers,
           search: this.search,
         }));
       },
@@ -68,8 +74,12 @@
         this.bottom_sheet = !this.bottom_sheet;
       },
 
-      setFilters() {
+      setSelectedFilters(filters) {
+        this.selected_filters = filters;
+      },
 
+      setSelectedSearchers(searchers) {
+        this.selected_searchers = searchers;
       },
 
     },
