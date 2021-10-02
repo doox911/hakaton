@@ -44,7 +44,11 @@ class SearchController {
         foreach (constant($searchers) as $key => $searcher) {
           if (in_array($key, $data['searchers'])) {
             $searcher = new $searcher;
-            $result[$content_type] = array_merge($result[$content_type], $searcher->search($data['search']));
+            if (isset($result[$content_type])) {
+              $result[$content_type] = array_merge($result[$content_type], $searcher->search($data['search']));
+            } else {
+              $result[$content_type] = $searcher->search($data['search']);
+            }
           }
         }
       } else {
