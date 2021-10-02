@@ -12,6 +12,7 @@
           placeholder="Давай попробуем. Вводи запрос..."
           hide-details
           @input="$emit('input', $event)"
+          @keyup.enter="$emit('click', true)"
         />
       </v-col>
       <v-col cols="auto">

@@ -41,6 +41,7 @@
                   autocomplete="off"
                   type="search"
                   hide-details
+                  @keyup.enter="onClickHandler"
                 />
               </transition>
             </v-col>
@@ -132,13 +133,15 @@
 
     methods: {
       onClickHandler() {
-        localStorage.setItem('user_id', `${Date.now()}`);
-        localStorage.setItem('user_name', `${this.name}`);
+        if (this.name.length) {
+          localStorage.setItem('user_id', `${Date.now()}`);
+          localStorage.setItem('user_name', `${this.name}`);
 
-        this.is_container = false;
-        setTimeout(() => {
-          this.$router.push('/');
-        }, 1000);
+          this.is_container = false;
+          setTimeout(() => {
+            this.$router.push('/');
+          }, 1000);
+        }
       },
     },
   };

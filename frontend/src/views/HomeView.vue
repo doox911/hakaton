@@ -1,6 +1,6 @@
 <template>
   <v-fade-transition>
-    <v-container>
+    <v-container v-show="show_content">
       <v-row>
         <v-col>
           <ipril-search
@@ -46,6 +46,7 @@
         bottom_sheet: false,
         selected_filters: ['article'],
         selected_searchers: ['wiki'],
+        show_content: false,
 
         find: {
           article: [],
@@ -56,6 +57,8 @@
     },
 
     mounted() {
+      this.show_content = localStorage.getItem('user_id') !== null;
+
       if (localStorage.getItem('user_id') === null) {
         this.$router.push('/welcome');
       }
