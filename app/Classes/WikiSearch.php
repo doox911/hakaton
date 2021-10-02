@@ -59,15 +59,27 @@ class WikiSearch extends AbstractSearch {
       collect($article_page_document->find('[role=navigation]'))->each->remove();
       collect($article_page_document->find('.mw-editsection'))->each->remove();
       collect($article_page_document->find('sup.reference'))->each->remove();
+      collect($article_page_document->find('style'))->each->remove();
+      collect($article_page_document->find('script'))->each->remove();
+      collect($article_page_document->find('head'))->each->remove();
 
       $article = (object)[
         'title' => $article_page_document->first('h1.firstHeading')->text(),
-        'content' => $article_page_document->first('.mw-body-content')->text(),
+        'content' => html_entity_decode($article_page_document->first('.mw-body-content')->text()),
         'type' => 'text',
         'source' => $link,
       ];
 
       $items->push($article);
+    }
+
+    // echo $items[0]->source;
+    // echo $items[0]->content;
+    //
+    // dd();
+
+    foreach ($items as $item) {
+      //echo $item->content;
     }
 
     return SearchResult::collection($items);

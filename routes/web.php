@@ -23,8 +23,8 @@ Route::get('/duck', static function () {
 });
 
 Route::get('/wiki', static function () {
-  $res = (new WikiSearch)->search('hello world');
-  //$res2 = (new ImagesWikiSearch)->search('Мама мыла раму');
+  $res = (new WikiSearch)->search('nano nano');
+  //$res = (new ImagesWikiSearch)->search('Серпухов');
   dd($res);
 });
 
