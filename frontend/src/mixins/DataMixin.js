@@ -11,7 +11,7 @@ export default {
         'app\\classes\\ramblersearch': 'Рамблер',
         'app\\classes\\wikisearch': 'Википедия',
         'app\\classes\\yandexsearch': 'Яндекс',
-        'app\\classes\\youtubesearch': 'Youtube',
+        'app\\classes\\RuTubeSearch': 'Rutube',
       };
 
       return rt[type];

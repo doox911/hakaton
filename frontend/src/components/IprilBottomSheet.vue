@@ -113,8 +113,8 @@
 
       searchers: [
         {
-          description: 'Youtube',
-          value: 'youtube',
+          description: 'Rutube',
+          value: 'rutube',
         },
         {
           description: 'Википедия',
