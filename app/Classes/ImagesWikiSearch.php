@@ -29,7 +29,7 @@ class ImagesWikiSearch extends AbstractSearch  {
 
     $url = self::$base_url . '/w/index.php?search=';
     $url .= implode('+', $request_words);
-    $url .= '&title=Служебная:Поиск&go=Перейти&wprov=acrw1_-1';
+    $url .= '&title=Служебная:Поиск&go=Перейти&profile=advanced&fulltext=1&ns0=1';
 
     $res = $this->client->request('GET', $url);
     $response_html = (string)$res->getBody();
