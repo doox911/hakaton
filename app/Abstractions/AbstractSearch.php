@@ -28,6 +28,7 @@ abstract class AbstractSearch implements ISearch {
     $http_client_params = [
       'timeout' => 30.0,
       'cookie' => true,
+      'verify' => false,
       'request.options' => [],
     ];
 
