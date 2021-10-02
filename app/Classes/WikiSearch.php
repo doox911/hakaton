@@ -45,7 +45,8 @@ class WikiSearch extends AbstractSearch {
     $founded_links = collect();
 
     foreach ($search_page_document->find('.mw-search-result-heading > a') as $result_text) {
-      $founded_links->push(self::$base_url . $result_text->attr('href'));
+      $external_link = urldecode(self::$base_url . $result_text->attr('href'));
+      $founded_links->push($external_link);
     }
 
     // парсим найденные ссылки и собираем результаты в объекты
@@ -58,6 +59,7 @@ class WikiSearch extends AbstractSearch {
       // удаляем не нужные элементы
       collect($article_page_document->find('[role=navigation]'))->each->remove();
       collect($article_page_document->find('.mw-editsection'))->each->remove();
+      collect($article_page_document->find('.mw-parser-output'))->each->remove();
       collect($article_page_document->find('sup.reference'))->each->remove();
       collect($article_page_document->find('style'))->each->remove();
       collect($article_page_document->find('script'))->each->remove();
@@ -71,15 +73,6 @@ class WikiSearch extends AbstractSearch {
       ];
 
       $items->push($article);
-    }
-
-    // echo $items[0]->source;
-    // echo $items[0]->content;
-    //
-    // dd();
-
-    foreach ($items as $item) {
-      //echo $item->content;
     }
 
     return SearchResult::collection($items);
