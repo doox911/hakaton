@@ -57,6 +57,7 @@ class ImagesWikiSearch extends AbstractSearch  {
           'content' => urldecode($image_url),
           'type' => 'image',
           'source' => urldecode($link),
+          'source_type' => strtolower(self::class),
         ]);
       }
     }

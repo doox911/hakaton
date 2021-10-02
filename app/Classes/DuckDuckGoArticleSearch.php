@@ -75,6 +75,7 @@ class DuckDuckGoArticleSearch extends AbstractSearch {
         'content' => $description->attr('content'),
         'type' => 'text',
         'source' => $link,
+        'source_type' => strtolower(self::class),
       ];
 
       $articles->push($article);

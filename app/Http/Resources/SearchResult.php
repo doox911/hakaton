@@ -14,20 +14,22 @@ class SearchResult extends JsonResource {
    *  content: string - контент
    *  type: string, - тип контента
    *  source: string - источник контента
+   *  source_type: string - тип источника
    * }
    *
    * @param \Illuminate\Http\Request $request
-   * @return array
+   * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
    */
-    public function toArray($request): array {
+  public function toArray($request): array|JsonSerializable|Arrayable {
 
-        $search_result = $this->resource;
+    $search_result = $this->resource;
 
-        return [
-            'title' => $search_result->title,
-            'content' => $search_result->content,
-            'type' => $search_result->type,
-            'source' => $search_result->source,
-        ];
-    }
+    return [
+      'title' => $search_result->title,
+      'content' => $search_result->content,
+      'type' => $search_result->type,
+      'source' => $search_result->source,
+      'source_type' => $search_result->source_type,
+    ];
+  }
 }
