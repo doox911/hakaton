@@ -26,9 +26,9 @@ class RamblerSearch extends AbstractSearch {
 
   /**
    * @param string $search_string
-   * @return AnonymousResourceCollection
-   * @throws InvalidSelectorException
+   * @return Collection
    * @throws GuzzleException
+   * @throws InvalidSelectorException
    */
   public function search(string $search_string): Collection {
     $items = collect();
@@ -57,9 +57,6 @@ class RamblerSearch extends AbstractSearch {
         $founded_links->push(urldecode($element_a->attr('href')));
       }
     }
-
-    $founded_links = collect(['https://uchi.ru/']);
-
 
     // парсим найденные ссылки и собираем результаты в объекты
     foreach ($founded_links as $link) {
