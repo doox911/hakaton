@@ -3,13 +3,13 @@
     <v-row>
       <v-col>
         <h2 class="press-start-2p-font user-select-none ipril-text-color">
-          Статьи
+          Изображения
         </h2>
       </v-col>
     </v-row>
     <v-row v-if="!loading">
       <v-col
-        v-for="(article, index) in articles"
+        v-for="(image, index) in images"
         :key="index"
         cols="3"
       >
@@ -19,12 +19,12 @@
           rounded
         >
           <v-card-title>
-            {{ article.title }}
+            {{ image.title }}
           </v-card-title>
           <v-card-text>
             <v-row>
               <v-col>
-                {{ article.content }}
+                <img :src="`${image.content}`" />
               </v-col>
             </v-row>
             <v-row justify="end">
@@ -32,7 +32,7 @@
                 <v-btn
                   icon
                   color="#81D4FA"
-                  @click="goToResource(article.source)"
+                  @click="goToResource(image.source)"
                 >
                   <v-icon
                     v-text="`mdi-open-in-new`"
@@ -50,11 +50,11 @@
     >
       <v-col cols="auto">
         <v-btn
-          :disabled="articles.length === value.length"
+          :disabled="images.length === value.length"
           text
           class="press-start-2p-font"
           style="color: #81D4FA"
-          @click="addThreeArticles"
+          @click="addThreeImages"
           v-text="`Показать ещё`"
         />
       </v-col>
@@ -71,7 +71,7 @@
 
 <script>
   export default {
-    name: 'Articles',
+    name: 'Images',
 
     props: {
       value: {
@@ -85,35 +85,35 @@
     },
 
     data: () => ({
-      articles: [],
+      images: [],
       last_index: 0,
       name: localStorage.getItem('user_name'),
     }),
 
     watch: {
       value() {
-        this.articles = [];
+        this.images = [];
 
-        this.addThreeArticles();
+        this.addThreeImages();
       },
     },
 
     methods: {
 
-      addThreeArticles() {
-        const articles = [];
+      addThreeImages() {
+        const images = [];
 
-        for (let i = this.articles.length; i < this.value.length; i++) {
-          if (i >= this.articles.length + 4) {
+        for (let i = this.images.length; i < this.value.length; i++) {
+          if (i >= this.images.length + 4) {
             break;
           }
 
           this.value[i].content = this.value[i].content.substring(0, 200);
 
-          articles.push({ ...this.value[i] });
+          images.push({ ...this.value[i] });
         }
 
-        this.articles = [...this.articles, ...articles];
+        this.images = [...this.images, ...images];
       },
 
       goToResource(link) {

@@ -21,6 +21,14 @@
       </v-row>
       <v-row>
         <v-col>
+          <images
+            :value="find.image"
+            :loading="loading"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
           <ipril-bottom-sheet
             v-model="bottom_sheet"
             @selected-filters="setSelectedFilters"
@@ -36,12 +44,14 @@
   import IprilSearch from 'Components/IprilSearch.vue';
   import IprilBottomSheet from 'Components/IprilBottomSheet';
   import Articles from 'Components/Articles';
+  import Images from 'Components/Images';
 
   export default {
     name: 'HomeView',
 
     components: {
       Articles,
+      Images,
       IprilSearch,
       IprilBottomSheet,
     },
