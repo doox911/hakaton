@@ -96,6 +96,6 @@ class RamblerSearch extends AbstractSearch {
       $items->push($article);
     }
 
-    return SearchResult::collection($items);
+    return $items;
   }
 }
