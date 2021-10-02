@@ -28,19 +28,8 @@ class ImagesWikiSearch extends AbstractSearch  {
     $request_words = explode(' ', $search_string);
 
     $url = self::$base_url . '/w/index.php?search=';
-
-    $is_first = true;
-    foreach ($request_words as $word) {
-      if (!$is_first) {
-        $url .= '+';
-      }
-
-      $url .= $word;
-
-      $is_first = false;
-    }
-
-    $url .= '&title=Служебная:Поиск&go=Перейти&wprov=acrw1_-1';
+    $url .= implode('+', $request_words);
+    $url .= '&title=Служебная:Поиск&go=Перейти&profile=advanced&fulltext=1&ns0=1';
 
     $res = $this->client->request('GET', $url);
     $response_html = (string)$res->getBody();
@@ -68,9 +57,9 @@ class ImagesWikiSearch extends AbstractSearch  {
 
         $items->push((object)[
           'title' => $image->attr('alt'),
-          'content' => $image_url,
+          'content' => urldecode($image_url),
           'type' => 'image',
-          'source' => $link,
+          'source' => urldecode($link),
         ]);
       }
     }

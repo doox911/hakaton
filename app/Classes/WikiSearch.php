@@ -35,19 +35,8 @@ class WikiSearch extends AbstractSearch {
     $request_words = explode(' ', $search_string);
 
     $url = self::$base_url . '/w/index.php?search=';
-
-    $is_first = true;
-    foreach ($request_words as $word) {
-      if (!$is_first) {
-        $url .= '+';
-      }
-
-      $url .= $word;
-
-      $is_first = false;
-    }
-
-    $url .= '&title=Служебная:Поиск&go=Перейти&wprov=acrw1_-1';
+    $url .= implode('+', $request_words);
+    $url .= '&title=Служебная:Поиск&go=Перейти&profile=advanced&fulltext=1&ns0=1';
 
     $res = $this->client->request('GET', $url);
     $response_html = (string)$res->getBody();
@@ -56,7 +45,8 @@ class WikiSearch extends AbstractSearch {
     $founded_links = collect();
 
     foreach ($search_page_document->find('.mw-search-result-heading > a') as $result_text) {
-      $founded_links->push(self::$base_url . $result_text->attr('href'));
+      $external_link = urldecode(self::$base_url . $result_text->attr('href'));
+      $founded_links->push($external_link);
     }
 
     // парсим найденные ссылки и собираем результаты в объекты
@@ -69,11 +59,15 @@ class WikiSearch extends AbstractSearch {
       // удаляем не нужные элементы
       collect($article_page_document->find('[role=navigation]'))->each->remove();
       collect($article_page_document->find('.mw-editsection'))->each->remove();
+      collect($article_page_document->find('.mw-parser-output'))->each->remove();
       collect($article_page_document->find('sup.reference'))->each->remove();
+      collect($article_page_document->find('style'))->each->remove();
+      collect($article_page_document->find('script'))->each->remove();
+      collect($article_page_document->find('head'))->each->remove();
 
       $article = (object)[
         'title' => $article_page_document->first('h1.firstHeading')->text(),
-        'content' => $article_page_document->first('.mw-body-content')->text(),
+        'content' => html_entity_decode($article_page_document->first('.mw-body-content')->text()),
         'type' => 'text',
         'source' => $link,
       ];

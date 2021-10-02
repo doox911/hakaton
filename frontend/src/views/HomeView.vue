@@ -5,6 +5,7 @@
         <v-col>
           <ipril-search
             v-model="search"
+            :loading="loading"
             @click="runSearch"
             @filters="filterHandler"
           />
@@ -12,7 +13,18 @@
       </v-row>
       <v-row>
         <v-col>
-          Content
+          <articles
+            :value="find.article"
+            :loading="loading"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <images
+            :value="find.image"
+            :loading="loading"
+          />
         </v-col>
       </v-row>
       <v-row>
@@ -31,11 +43,15 @@
 <script>
   import IprilSearch from 'Components/IprilSearch.vue';
   import IprilBottomSheet from 'Components/IprilBottomSheet';
+  import Articles from 'Components/Articles';
+  import Images from 'Components/Images';
 
   export default {
-    name: 'Home',
+    name: 'HomeView',
 
     components: {
+      Articles,
+      Images,
       IprilSearch,
       IprilBottomSheet,
     },
@@ -43,6 +59,7 @@
     data() {
       return {
         search: '',
+        loading: false,
         bottom_sheet: false,
         selected_filters: ['article'],
         selected_searchers: ['wiki'],
@@ -66,11 +83,19 @@
 
     methods: {
       async runSearch() {
-        console.log('runSearch', await this.$axios.post('/api/search', {
+        this.loading = true;
+
+        const response = await this.$axios.post('/api/search', {
           filters: this.selected_filters,
           searchers: this.selected_searchers,
           search: this.search,
-        }));
+        });
+
+        this.find.article = response.data.content?.article ?? [];
+        this.find.image = response.data.content?.image ?? [];
+        this.find.video = response.data.content?.video ?? [];
+
+        this.loading = false;
       },
 
       filterHandler() {
