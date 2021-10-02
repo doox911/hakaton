@@ -16,6 +16,23 @@
       </v-col>
       <v-col cols="auto">
         <v-btn
+          class="elevation-24 pa-9"
+          icon
+          rounded
+          color="#81D4FA"
+          @click="$emit('filters', true)"
+        >
+          <v-icon
+            large
+          >
+            mdi-filter-outline
+          </v-icon>
+        </v-btn>
+
+      </v-col>
+      <v-col cols="auto">
+        <v-btn
+          :disabled="!value.length"
           color="white"
           class="elevation-24 pa-9 press-start-2p-font"
           style="color: #81D4FA"
