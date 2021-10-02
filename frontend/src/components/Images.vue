@@ -1,14 +1,14 @@
 <template>
-  <viewer :images="images">
+  <viewer v-if="!loading && images.length" :images="images">
     <v-container>
-      <v-row v-if="!loading && images.length">
+      <v-row>
         <v-col>
           <h2 class="press-start-2p-font user-select-none ipril-text-color">
             Изображения
           </h2>
         </v-col>
       </v-row>
-      <v-row v-if="!loading && images.length">
+      <v-row>
         <v-col
           v-for="(image, index) in images"
           :key="index"
@@ -27,7 +27,7 @@
                 <v-col>
                   <img
                     :src="`${image.content}`"
-                    style="width:100%;"
+                    style="width:100%; height: 200px;"
                   >
                 </v-col>
               </v-row>
@@ -55,7 +55,6 @@
         </v-col>
       </v-row>
       <v-row
-        v-if="!loading && images.length"
         justify="end"
       >
         <v-col cols="auto">

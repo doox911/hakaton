@@ -29,6 +29,14 @@
       </v-row>
       <v-row>
         <v-col>
+          <i-video
+            :value="find.video"
+            :loading="loading"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
           <ipril-bottom-sheet
             v-model="bottom_sheet"
             @selected-filters="setSelectedFilters"
@@ -45,6 +53,7 @@
   import IprilBottomSheet from 'Components/IprilBottomSheet';
   import Articles from 'Components/Articles';
   import Images from 'Components/Images';
+  import IVideo from 'Components/IVideo';
 
   export default {
     name: 'HomeView',
@@ -52,6 +61,7 @@
     components: {
       Articles,
       Images,
+      IVideo,
       IprilSearch,
       IprilBottomSheet,
     },
@@ -83,19 +93,23 @@
 
     methods: {
       async runSearch() {
-        this.loading = true;
+        try {
+          this.loading = true;
 
-        const response = await this.$axios.post('/api/search', {
-          filters: this.selected_filters,
-          searchers: this.selected_searchers,
-          search: this.search,
-        });
+          const response = await this.$axios.post('/api/search', {
+            filters: this.selected_filters,
+            searchers: this.selected_searchers,
+            search: this.search,
+          });
 
-        this.find.article = response.data.content?.article ?? [];
-        this.find.image = response.data.content?.image ?? [];
-        this.find.video = response.data.content?.video ?? [];
-
-        this.loading = false;
+          this.find.article = response.data.content?.article ?? [];
+          this.find.image = response.data.content?.image ?? [];
+          this.find.video = response.data.content?.video ?? [];
+        } catch (e) {
+          console.log(e);
+        } finally {
+          this.loading = false;
+        }
       },
 
       filterHandler() {
