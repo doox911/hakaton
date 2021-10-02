@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\CustomSearch;
+use App\Classes\DuckDuckGoArticleSearch;
 use App\Classes\ImagesWikiSearch;
 use App\Classes\WikiSearch;
 use App\Classes\YandexSearch;
@@ -11,6 +11,16 @@ use App\Http\Requests\SearchRequest;
 use Illuminate\Http\JsonResponse;
 
 class SearchController {
+
+  /**
+   * Запрос выполнен успешно
+   */
+  private const OK_CODE = 200;
+
+  /**
+   * По запросу нет результатов
+   */
+  private const NO_CONTENT_CODE = 204;
 
   private const video_searchers = [
     'youtube' => YouTubeSearch::class,
@@ -22,8 +32,13 @@ class SearchController {
 
   private const article_searchers = [
     'yandex' => YandexSearch::class,
+    'duck' => DuckDuckGoArticleSearch::class,
     'wiki' => WikiSearch::class,
   ];
+
+  private const audio_searchers = [];
+
+  private const presentation_searchers = [];
 
   /**
    * Осуществляется поиск по всем ресурсам с использованием предпочтений поиска пользователя
@@ -33,7 +48,7 @@ class SearchController {
    */
   public function search(SearchRequest $request): JsonResponse {
     $data = $request->validated();
-
+    $code = self::OK_CODE;
     $result = [];
 
     foreach ($data['filters'] as $content_type) {
@@ -51,16 +66,16 @@ class SearchController {
             }
           }
         }
-      } else {
-        $result['custom'] = array_merge(
-          $result[$content_type],
-          (new CustomSearch())->setUrl('https://custom_url.org')->search($data['search'])
-        );
       }
+    }
+
+    // если нет результатов - код 204
+    if (empty($result)) {
+      $code = self::NO_CONTENT_CODE;
     }
 
     return response()->json([
       'content' => $result
-    ], 200);
+    ], $code);
   }
 }

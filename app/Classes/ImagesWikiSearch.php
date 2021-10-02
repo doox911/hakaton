@@ -2,39 +2,18 @@
 
 namespace App\Classes;
 
-use App\Contracts\ISearch;
+use App\Abstractions\AbstractSearch;
 use App\Http\Resources\SearchResult;
-use App\Services\ProxyService;
 use DiDom\Document;
 use DiDom\Exceptions\InvalidSelectorException;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * Картинки с википедии
  */
-class ImagesWikiSearch implements ISearch {
-  public static string $base_url = 'https://ru.wikipedia.org';
-
-  /**
-   * Конструктор
-   */
-  public function __construct() {
-    $proxy_ip_list = ProxyService::getProxyIpCollection();
-
-    $http_client_params = [
-      'timeout' => 30.0,
-      'cookie' => true,
-      'request.options' => [],
-    ];
-
-    if ($proxy_ip_list->isNotEmpty()) {
-      $http_client_params['request.options']['proxy'] = 'tcp://' . $proxy_ip_list[array_rand($proxy_ip_list->toArray())];
-    }
-
-    $this->client = new Client($http_client_params);
-  }
+class ImagesWikiSearch extends AbstractSearch  {
+  protected static string $base_url = 'https://ru.wikipedia.org';
 
   /**
    * @param string $search_string
@@ -44,8 +23,6 @@ class ImagesWikiSearch implements ISearch {
    */
   public function search(string $search_string): AnonymousResourceCollection {
     $items = collect();
-
-    dump('Запрос: ' . $search_string);
 
     $search_string = mb_strtolower($search_string);
     $request_words = explode(' ', $search_string);
@@ -76,7 +53,6 @@ class ImagesWikiSearch implements ISearch {
     }
 
     // парсим найденные ссылки и собираем результаты в объекты
-
     foreach ($founded_links as $link) {
       $res = $this->client->request('GET', $link);
       $response_html = (string)$res->getBody();
