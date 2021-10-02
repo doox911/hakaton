@@ -57,9 +57,9 @@ class ImagesWikiSearch extends AbstractSearch  {
 
         $items->push((object)[
           'title' => $image->attr('alt'),
-          'content' => $image_url,
+          'content' => urldecode($image_url),
           'type' => 'image',
-          'source' => $link,
+          'source' => urldecode($link),
         ]);
       }
     }
