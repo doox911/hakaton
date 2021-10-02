@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <v-row v-if="!loading || !images.length">
+    <v-row v-if="!loading && images.length">
       <v-col>
         <h2 class="press-start-2p-font user-select-none ipril-text-color">
           Изображения
         </h2>
       </v-col>
     </v-row>
-    <v-row v-if="!loading">
+    <v-row v-if="!loading && images.length">
       <v-col
         v-for="(image, index) in images"
         :key="index"
@@ -54,7 +54,7 @@
       </v-col>
     </v-row>
     <v-row
-      v-if="!loading"
+      v-if="!loading && images.length"
       justify="end"
     >
       <v-col cols="auto">
