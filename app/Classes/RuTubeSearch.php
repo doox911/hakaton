@@ -29,9 +29,8 @@ class RuTubeSearch extends AbstractSearch {
         'content' => $video->description,
         'type' => 'video',
         'source' => $video->video_url,
-        'source_type' => self::class,
+        'source_type' => strtolower(self::class),
       ];
-
 
       $videos->push($info);
     }
