@@ -28,18 +28,7 @@ class ImagesWikiSearch extends AbstractSearch  {
     $request_words = explode(' ', $search_string);
 
     $url = self::$base_url . '/w/index.php?search=';
-
-    $is_first = true;
-    foreach ($request_words as $word) {
-      if (!$is_first) {
-        $url .= '+';
-      }
-
-      $url .= $word;
-
-      $is_first = false;
-    }
-
+    $url .= implode('+', $request_words);
     $url .= '&title=Служебная:Поиск&go=Перейти&wprov=acrw1_-1';
 
     $res = $this->client->request('GET', $url);
