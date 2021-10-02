@@ -17,6 +17,7 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@mdi/font": "^6.2.95",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-pwa": "~4.5.0",
@@ -33,6 +34,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-vuetify": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
