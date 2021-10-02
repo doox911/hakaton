@@ -72,7 +72,7 @@ class RamblerSearch extends AbstractSearch {
       $title_object = $article_page_document->first('meta[name=title]');
       $description_object = $article_page_document->first('meta[name=description]');
 
-      dd($article_page_document);
+      dd($article_page_document->first('head'));
       $title = '';
       $content = '';
 
@@ -93,6 +93,7 @@ class RamblerSearch extends AbstractSearch {
         'content' => $content,
         'type' => 'text',
         'source' => $link,
+        'source_type' => strtolower(self::class),
       ];
 
       $items->push($article);
