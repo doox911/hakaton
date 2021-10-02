@@ -27,8 +27,8 @@
 #### Laravel, Vue, Vuetify, JavaScript
 
 # Демо
-#### Приложение доступно по адресу: <a href=http://5f17-185-9-75-238.ngrok.io/>ngrok</a>
-#### Скринкаст доступен по адресу: <a href='#'>screencast</a>
+#### Приложение доступно по адресу: <a href="http://5f17-185-9-75-238.ngrok.io">ngrok</a>
+#### Скринкаст доступен по адресу: <a href="https://cloud.mail.ru/public/he3q/btmTfpxL5">screencast</a>
 
 # Требования
 ### Вариант 1
