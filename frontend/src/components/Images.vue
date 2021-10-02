@@ -24,10 +24,19 @@
           <v-card-text>
             <v-row>
               <v-col>
-                <img :src="`${image.content}`" />
+                <img
+                  :src="`${image.content}`"
+                  style="width:100%;"
+                >
               </v-col>
             </v-row>
-            <v-row justify="end">
+            <v-row
+              align="center"
+              justify="end"
+            >
+              <v-col cols="auto">
+                <b>{{ getSourceName(image.source_type) }}</b>
+              </v-col>
               <v-col cols="auto">
                 <v-btn
                   icon
@@ -63,8 +72,14 @@
 </template>
 
 <script>
+  import DataMixin from 'Mixins/DataMixin';
+
   export default {
     name: 'Images',
+
+    mixins: [
+      DataMixin,
+    ],
 
     props: {
       value: {
@@ -109,9 +124,6 @@
         this.images = [...this.images, ...images];
       },
 
-      goToResource(url) {
-        window.open(url, '_blank');
-      },
     },
   };
 </script>
