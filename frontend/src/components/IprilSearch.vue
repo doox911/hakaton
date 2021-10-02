@@ -7,6 +7,7 @@
       <v-col>
         <v-text-field
           :value="value"
+          :disabled="loading"
           class="elevation-24 pa-5 press-start-2p-font font-size-14"
           rounded
           placeholder="Давай попробуем. Вводи запрос..."
@@ -18,6 +19,7 @@
       <v-col cols="auto">
         <v-btn
           class="elevation-24 pa-9"
+          :disabled="loading"
           icon
           rounded
           color="#81D4FA"
@@ -29,11 +31,10 @@
             mdi-filter-outline
           </v-icon>
         </v-btn>
-
       </v-col>
       <v-col cols="auto">
         <v-btn
-          :disabled="!value.length"
+          :disabled="!value.length || loading"
           color="white"
           class="elevation-24 pa-9 press-start-2p-font"
           style="color: #81D4FA"
@@ -54,6 +55,10 @@
       value: {
         default: '',
         type: String,
+      },
+      loading: {
+        default: false,
+        type: Boolean,
       },
     },
 

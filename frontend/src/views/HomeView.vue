@@ -5,6 +5,7 @@
         <v-col>
           <ipril-search
             v-model="search"
+            :loading="loading"
             @click="runSearch"
             @filters="filterHandler"
           />
