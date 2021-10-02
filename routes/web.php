@@ -1,5 +1,6 @@
 <?php
 
+use App\Classes\DuckDuckGoArticleSearch;
 use App\Classes\ImagesWikiSearch;
 use App\Classes\WikiSearch;
 use Illuminate\Support\Facades\Route;
@@ -15,10 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/duck', static function () {
+  $res = (new DuckDuckGoArticleSearch())->search('funny moments animal videos');
+  dd($res);
+});
+
 Route::get('/wiki', static function () {
-  $res = (new WikiSearch)->search('Мама мыла раму');
-  $res2 = (new ImagesWikiSearch)->search('Мама мыла раму');
-  dd($res, $res2);
+  $res = (new WikiSearch)->search('hello world');
+  //$res2 = (new ImagesWikiSearch)->search('Мама мыла раму');
+  dd($res);
 });
 
 Route::get('/getimages', function () {

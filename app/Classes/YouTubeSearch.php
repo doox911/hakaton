@@ -2,16 +2,16 @@
 
 namespace App\Classes;
 
-use App\Contracts\ISearch;
+use App\Abstractions\AbstractSearch;
 use App\Http\Resources\SearchResult;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * YouTube scrapper
  */
-class YouTubeSearch implements ISearch {
+class YouTubeSearch extends AbstractSearch {
 
-    public static string $url = 'https://www.youtube.com/';
+    protected static string $url = 'https://www.youtube.com/';
 
     public function search(string $search_string): AnonymousResourceCollection {
         $videos = collect();

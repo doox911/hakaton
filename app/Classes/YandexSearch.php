@@ -2,16 +2,16 @@
 
 namespace App\Classes;
 
-use App\Contracts\ISearch;
+use App\Abstractions\AbstractSearch;
 use App\Http\Resources\SearchResult;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * Yandex scrapper
  */
-class YandexSearch implements ISearch {
+class YandexSearch extends AbstractSearch {
 
-    public static string $url = 'https://yandex.ru/';
+    protected static string $url = 'https://yandex.ru/';
 
     public function search(string $search_string): AnonymousResourceCollection {
         $articles = collect();

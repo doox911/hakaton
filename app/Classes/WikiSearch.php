@@ -2,12 +2,10 @@
 
 namespace App\Classes;
 
-use App\Services\ProxyService;
-use App\Contracts\ISearch;
+use App\Abstractions\AbstractSearch;
 use App\Http\Resources\SearchResult;
 use DiDom\Document;
 use DiDom\Exceptions\InvalidSelectorException;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -20,28 +18,9 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
  * sudo apt-get install composer
  * composer require imangazaliev/didom
  */
-class WikiSearch implements ISearch {
+class WikiSearch extends AbstractSearch {
 
-  public static string $base_url = 'https://ru.wikipedia.org';
-
-  /**
-   * Конструктор
-   */
-  public function __construct() {
-    $proxy_ip_list = ProxyService::getProxyIpCollection();
-
-    $http_client_params = [
-      'timeout' => 30.0,
-      'cookie' => true,
-      'request.options' => [],
-    ];
-
-    if ($proxy_ip_list->isNotEmpty()) {
-      $http_client_params['request.options']['proxy'] = 'tcp://' . $proxy_ip_list[array_rand($proxy_ip_list->toArray())];
-    }
-
-    $this->client = new Client($http_client_params);
-  }
+  protected static string $base_url = 'https://ru.wikipedia.org';
 
   /**
    * @param string $search_string
@@ -56,19 +35,8 @@ class WikiSearch implements ISearch {
     $request_words = explode(' ', $search_string);
 
     $url = self::$base_url . '/w/index.php?search=';
-
-    $is_first = true;
-    foreach ($request_words as $word) {
-      if (!$is_first) {
-        $url .= '+';
-      }
-
-      $url .= $word;
-
-      $is_first = false;
-    }
-
-    $url .= '&title=Служебная:Поиск&go=Перейти&wprov=acrw1_-1';
+    $url .= implode('+', $request_words);
+    $url .= '&title=Служебная:Поиск&go=Перейти&profile=advanced&fulltext=1&ns0=1';
 
     $res = $this->client->request('GET', $url);
     $response_html = (string)$res->getBody();
@@ -81,7 +49,6 @@ class WikiSearch implements ISearch {
     }
 
     // парсим найденные ссылки и собираем результаты в объекты
-
     foreach ($founded_links as $link) {
       $res = $this->client->request('GET', $link);
       $response_html = (string)$res->getBody();
