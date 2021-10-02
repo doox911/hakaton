@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <v-row>
+      <v-col>
+        <h2 class="press-start-2p-font user-select-none ipril-text-color">
+          Статьи
+        </h2>
+      </v-col>
+    </v-row>
     <v-row v-if="!loading">
       <v-col
         v-for="(article, index) in articles"
