@@ -27,7 +27,7 @@
 #### Laravel, Vue, Vuetify, JavaScript
 
 # Демо
-#### Приложение доступно по адресу: <a href='#'>ngrok</a>
+#### Приложение доступно по адресу: <a href=http://5f17-185-9-75-238.ngrok.io/>ngrok</a>
 #### Скринкаст доступен по адресу: <a href='#'>screencast</a>
 
 # Требования
