@@ -45,8 +45,6 @@ class ImagesWikiSearch implements ISearch {
   public function search(string $search_string): AnonymousResourceCollection {
     $items = collect();
 
-    dump('Запрос: ' . $search_string);
-
     $search_string = mb_strtolower($search_string);
     $request_words = explode(' ', $search_string);
 
