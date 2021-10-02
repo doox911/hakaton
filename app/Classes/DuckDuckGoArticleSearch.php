@@ -33,6 +33,7 @@ class DuckDuckGoArticleSearch extends AbstractSearch {
       'content' => $json_response->AbstractText,
       'type' => 'text',
       'source' => $json_response->AbstractURL,
+      'source_type' => strtolower(self::class),
     ]);
 
     // search other
