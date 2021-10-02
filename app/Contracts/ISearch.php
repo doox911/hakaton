@@ -14,7 +14,7 @@ interface ISearch {
      * function for search
      *
      * @param string $search_string
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
     public function search(string $search_string): AnonymousResourceCollection;
 }

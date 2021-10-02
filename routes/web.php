@@ -1,5 +1,7 @@
 <?php
 
+use App\Classes\ImagesWikiSearch;
+use App\Classes\WikiSearch;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/wiki', static function () {
+  $res = (new WikiSearch)->search('Мама мыла раму');
+  $res2 = (new ImagesWikiSearch)->search('Мама мыла раму');
+  dd($res, $res2);
+});
 
 Route::get('/getimages', function () {
   $need_content = [
