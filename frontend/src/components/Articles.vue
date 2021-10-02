@@ -15,16 +15,41 @@
             {{ article.title }}
           </v-card-title>
           <v-card-text>
-            {{ article.content }}
+            <v-row>
+              <v-col>
+                {{ article.content }}
+              </v-col>
+            </v-row>
+            <v-row justify="end">
+              <v-col cols="auto">
+
+              </v-col>
+              <v-col cols="auto">
+                <v-btn
+                  icon
+                  color="#81D4FA"
+                  @click="goToResource(article.source)"
+                >
+                  <v-icon
+                    v-text="`mdi-open-in-new`"
+                  />
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
-    <v-row v-if="!loading">
-      <v-col>
+    <v-row
+      v-if="!loading"
+      justify="end"
+    >
+      <v-col cols="auto">
         <v-btn
           :disabled="articles.length === value.length"
           text
+          class="press-start-2p-font"
+          style="color: #81D4FA"
           @click="addThreeArticles"
           v-text="`Показать ещё`"
         />
@@ -46,8 +71,8 @@
 
     props: {
       value: {
-        default: Array,
-        type: [],
+        default: () => [],
+        type: Array,
       },
       loading: {
         default: false,
@@ -87,6 +112,9 @@
         this.articles = [...this.articles, ...articles];
       },
 
+      goToResource(link) {
+        location.href = link;
+      },
     },
   };
 </script>
