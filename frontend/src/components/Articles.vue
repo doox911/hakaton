@@ -27,7 +27,13 @@
                 {{ article.content }}
               </v-col>
             </v-row>
-            <v-row justify="end">
+            <v-row
+              align="center"
+              justify="end"
+            >
+              <v-col cols="auto">
+                <b>{{ getSourceName(article.source_type) }}</b>
+              </v-col>
               <v-col cols="auto">
                 <v-btn
                   icon
@@ -70,8 +76,14 @@
 </template>
 
 <script>
+  import DataMixin from 'Mixins/DataMixin';
+
   export default {
     name: 'Articles',
+
+    mixins: [
+      DataMixin,
+    ],
 
     props: {
       value: {
@@ -116,9 +128,6 @@
         this.articles = [...this.articles, ...articles];
       },
 
-      goToResource(link) {
-        location.href = link;
-      },
     },
   };
 </script>

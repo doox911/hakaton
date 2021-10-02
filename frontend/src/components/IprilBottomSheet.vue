@@ -128,10 +128,10 @@
           description: 'DuckDuckGo',
           value: 'duck',
         },
-        // {
-        //   description: 'Рамблер',
-        //   value: 'rambler',
-        // },
+        {
+          description: 'Рамблер',
+          value: 'rambler',
+        },
       ],
 
       selected_filters: ['article'],

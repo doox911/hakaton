@@ -1,70 +1,87 @@
 <template>
-  <v-container>
-    <v-row v-if="!loading">
-      <v-col>
-        <h2 class="press-start-2p-font user-select-none ipril-text-color">
-          Изображения
-        </h2>
-      </v-col>
-    </v-row>
-    <v-row v-if="!loading">
-      <v-col
-        v-for="(image, index) in images"
-        :key="index"
-        cols="3"
-      >
-        <v-card
-          :loading="loading"
-          :disabled="loading"
-          rounded
+  <viewer :images="images">
+    <v-container>
+      <v-row v-if="!loading && images.length">
+        <v-col>
+          <h2 class="press-start-2p-font user-select-none ipril-text-color">
+            Изображения
+          </h2>
+        </v-col>
+      </v-row>
+      <v-row v-if="!loading && images.length">
+        <v-col
+          v-for="(image, index) in images"
+          :key="index"
+          cols="3"
         >
-          <v-card-title>
-            {{ image.title }}
-          </v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-col>
-                <img :src="`${image.content}`" />
-              </v-col>
-            </v-row>
-            <v-row justify="end">
-              <v-col cols="auto">
-                <v-btn
-                  icon
-                  color="#81D4FA"
-                  @click="goToResource(image.source)"
-                >
-                  <v-icon
-                    v-text="`mdi-open-in-new`"
-                  />
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row
-      v-if="!loading"
-      justify="end"
-    >
-      <v-col cols="auto">
-        <v-btn
-          :disabled="images.length === value.length"
-          text
-          class="press-start-2p-font"
-          style="color: #81D4FA"
-          @click="addThreeImages"
-          v-text="`Показать ещё`"
-        />
-      </v-col>
-    </v-row>
-  </v-container>
+          <v-card
+            :loading="loading"
+            :disabled="loading"
+            rounded
+          >
+            <v-card-title>
+              {{ image.title }}
+            </v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col>
+                  <img
+                    :src="`${image.content}`"
+                    style="width:100%;"
+                  >
+                </v-col>
+              </v-row>
+              <v-row
+                align="center"
+                justify="end"
+              >
+                <v-col cols="auto">
+                  <b>{{ getSourceName(image.source_type) }}</b>
+                </v-col>
+                <v-col cols="auto">
+                  <v-btn
+                    icon
+                    color="#81D4FA"
+                    @click="goToResource(image.source)"
+                  >
+                    <v-icon
+                      v-text="`mdi-open-in-new`"
+                    />
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row
+        v-if="!loading && images.length"
+        justify="end"
+      >
+        <v-col cols="auto">
+          <v-btn
+            :disabled="images.length === value.length"
+            text
+            class="press-start-2p-font"
+            style="color: #81D4FA"
+            @click="addThreeImages"
+            v-text="`Показать ещё`"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+  </viewer>
 </template>
 
 <script>
+  import DataMixin from 'Mixins/DataMixin';
+
   export default {
     name: 'Images',
+
+    mixins: [
+      DataMixin,
+    ],
 
     props: {
       value: {
@@ -109,9 +126,6 @@
         this.images = [...this.images, ...images];
       },
 
-      goToResource(url) {
-        window.open(url, '_blank');
-      },
     },
   };
 </script>
