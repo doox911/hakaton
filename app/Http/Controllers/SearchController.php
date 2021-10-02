@@ -12,53 +12,48 @@ use Illuminate\Http\JsonResponse;
 
 class SearchController {
 
-    private const video_searchers = [
-        'youtube' => YouTubeSearch::class,
-    ];
+  private const video_searchers = [
+    'youtube' => YouTubeSearch::class,
+  ];
 
-    private const image_searchers = [
-        'image_wiki' => ImagesWikiSearch::class,
-    ];
+  private const image_searchers = [
+    'image_wiki' => ImagesWikiSearch::class,
+  ];
 
-    private const article_searchers = [
-        'yandex' => YandexSearch::class,
-        'wiki' => WikiSearch::class,
-    ];
+  private const article_searchers = [
+    'yandex' => YandexSearch::class,
+    'wiki' => WikiSearch::class,
+  ];
 
+  /**
+   * Осуществляется поиск по всем ресурсам с использованием предпочтений поиска пользователя
+   *
+   * @param \App\Http\Requests\SearchRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function search(SearchRequest $request): JsonResponse {
+    $data = $request->validated();
 
-    // Запрос на поиск(с фронта)
-    //
+    $result = [];
 
+    foreach ($data['filters'] as $content_type) {
 
-    /**
-     * Осуществляется поиск по всем ресурсам с использованием предпочтений поиска пользователя
-     *
-     * @param \App\Http\Requests\SearchRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function search(SearchRequest $request): JsonResponse {
-        $data = $request->validated();
+      $searchers = "self::{$content_type}_searchers";
 
-        $result = [];
-
-        foreach ($data['filters'] as $content_type) {
-
-            $searchers = "self::{$content_type}_searchers";
-
-            if (defined($searchers)) {
-                foreach (constant($searchers) as $key => $searcher) {
-                    if (in_array($key, $data['searchers'])) {
-                        $searcher = new $searcher;
-                        $result[$content_type][] = $searcher->search($data['search']);
-                    }
-                }
-            } else {
-                $result['custom'][] = (new CustomSearch())->setUrl('https://custom_url.org')->search($data['search']);
-            }
+      if (defined($searchers)) {
+        foreach (constant($searchers) as $key => $searcher) {
+          if (in_array($key, $data['searchers'])) {
+            $searcher = new $searcher;
+            $result[$content_type][] = $searcher->search($data['search']);
+          }
         }
-
-        return response()->json([
-            'content' => $result
-        ], 200);
+      } else {
+        $result['custom'][] = (new CustomSearch())->setUrl('https://custom_url.org')->search($data['search']);
+      }
     }
+
+    return response()->json([
+      'content' => $result
+    ], 200);
+  }
 }
