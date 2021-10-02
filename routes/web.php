@@ -4,7 +4,7 @@ use App\Classes\DuckDuckGoArticleSearch;
 use App\Classes\ImagesWikiSearch;
 use App\Classes\RamblerSearch;
 use App\Classes\WikiSearch;
-use App\Classes\YouTubeSearch;
+use App\Classes\RuTubeSearch;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('yt', static function(){
-  $res = (new YouTubeSearch())->search('iphone 13');
+Route::get('rt', static function(){
+  $res = (new RuTubeSearch())->search('iphone 13');
   dd($res);
 });
 
