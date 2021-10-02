@@ -1,7 +1,7 @@
 <?php
 
-use DiDom\Document;
-use Illuminate\Support\Facades\Http;
+use App\Classes\ImagesWikiSearch;
+use App\Classes\WikiSearch;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,128 +13,82 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-
-
-sudo apt-get update
-sudo apt-get install composer
-composer require imangazaliev/didom
-
-
 */
 
-
 Route::get('/wiki', static function () {
+  $res = (new WikiSearch)->search('Мама мыла раму');
+  $res2 = (new ImagesWikiSearch)->search('Мама мыла раму');
+  dd($res, $res2);
+});
 
+Route::get('/getimages', function () {
+    $need_content = [
+        ['type' => 'articles', 'count' => 10],
+        ['type' => 'images', 'count' => 25],
+    ];
 
+    $text = 'Ostrov krit'; //Строка запроса
+    $text = strtolower(trim($text)); //вычистим лишние пробелы и приведем к нижнему регистру
+    $text = preg_replace('/[^\wа-яА-ЯёЁ]/u', '+', $text);
 
-    // приходит с фронта
-    $request_string = 'Мама мыла раму';
+    $articles = [];
+    $images = [];
 
-    dump('Запрос: ' . $request_string);
+    foreach ($need_content as $content){
+        if ($content['type'] === 'articles'){
+            $iterate = 1;
+            while (count($articles) < $content['count']){
+                $response = \Illuminate\Support\Facades\Http::get('https://search.yahoo.com/search', [
+                    'p' => $text,
+                    'ei' => 'UTF-8',
+                    'b' => $iterate,
+                ]);
+                $html = $response->getBody()->getContents();
+                $document = new \DiDom\Document($html);
+                $posts = $document->find('.algo');
 
+                foreach ($posts as $post){
+                    $href = $post->first('h3')->first('a');
+                    $title =$href;
+                    $title->firstInDocument('span')->remove();
+                    $articles[] = [
+                        'title' => $title->text(),
+                        'href' => $href->getAttribute('href'),
+                        'content' => $post->first('.compText')->text(),
+                    ];
+                }
+                $iterate +=7; //Шаг поисковика яху = 7
+            }
+        } else if ($content['type'] === 'images'){
+            // while (count($images) < $content['count']){
+                $response = \Illuminate\Support\Facades\Http::get('https://www.bing.com/images/search', [ //Яху берет картинки с бинга
+                    'q' => $text,
+                ]);
+                $html = $response->getBody()->getContents();
+                $document = new \DiDom\Document($html);
 
-    $request_string = mb_strtolower($request_string);
-    $request_words = explode(' ', $request_string);
+                $imgs = $document->find('img');
+                foreach ($imgs as $img){
+                    $url =  $img->getAttribute('src');
 
-    $url = 'https://ru.wikipedia.org/w/index.php?search=';
+                    $ch = curl_init($url);
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_HEADER, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    $output = curl_exec($ch);
+                    curl_close($ch);
+                    $base64 = "data:image/png;base64,<?php echo base64_encode($output);?>"; //Не проверял
 
-    $is_first = true;
-    foreach ($request_words as $word) {
-        if (!$is_first) {
-            $url .= '+';
+                    $images[] = [
+                        'src' => $url,
+                        'content' => $base64,
+                    ];
+                }
+            // } //Не знаю как картинки взять с новой страницы
         }
-
-        $url .= $word;
-
-        $is_first = false;
     }
-
-    $url .= '&title=Служебная:Поиск&go=Перейти&wprov=acrw1_-1';
-
-    // TODO: нужно будет написать скрипт который по крону раз в час забирает свежие актуальный прокси-IP
-    //       с этого сайта https://hidemy.name/ru/proxy-list/, перед записью в
-    //       базу в идеале чтобы IP ещё проверялся на работоспособность
-    $proxy_ip_list = [
-        // '172.67.70.88:80',
-        // '172.67.254.108:80',
-        // '172.67.181.188:80',
-        // '172.67.181.193:80',
-        // '172.67.74.107:80',
-        // '172.67.253.233:80',
-        // '172.67.253.207:80',
-        // '172.67.70.7:80',
-        // '172.67.242.194:80',
-        // '172.67.181.191:80',
-        // '172.67.181.69:80',
-        // '172.67.253.249:80',
-        // '172.67.182.153:80',
-    ];
-
-    $http_client_params = [
-        'timeout' => 30.0,
-        'cookie' => true,
-        'request.options' => [],
-    ];
-
-    if (!empty($proxy_ip_list)) {
-        $http_client_params['request.options']['proxy'] = 'tcp://' . $proxy_ip_list[array_rand($proxy_ip_list)];
-    }
-
-    $client = new GuzzleHttp\Client($http_client_params);
-
-    $res = $client->request('GET', $url);
-    $response_html = (string)$res->getBody();
-
-    $search_page_document = new Document($response_html);
-    $founded_links = collect();
-
-    foreach ($search_page_document->find('.mw-search-result-heading > a') as $result_text) {
-        $founded_links->push($result_text->attr('href'));
-    }
-
-
-    $search_results = collect();
-
-    foreach ($founded_links as $link) {
-        $res = $client->request('GET', $link);
-        $response_html = (string)$res->getBody();
-
-        $article_page_document = new Document($response_html);
-
-        $search_result = (object)[
-            'title' => 'Заголовок контента',
-            'content' => 'контент',
-            'type' => 'text',
-            'source' => $link,
-        ];
-
-        dd($article_page_document->find('h1.firstHeading'));
-
-        $search_results->push($search_result);
-    }
-
-
-    dump($http_client_params['request.options']);
-    dump($search_results);
-    dd();
-    //echo $document->first('title::text');
-
-
-    // echo $document->first('img');
-
-    // $text_result = (object)[
-    //     'title' => 'Заголовок контента',
-    //     'content' => 'контент',
-    //     'type' => 'text',
-    //     'source' => 'ссылка на страницу откуда взял текст',
-    // ];
-    //
-    // $image_result = (object)[
-    //     'title' => 'Подпись картинки',
-    //     'content' => 'ссылка на картинку',
-    //     'type' => 'image',
-    //     'source' => 'ссылка на страницу откуда взял картинку',
-    // ];
+    echo print_r($articles);
+    echo print_r($images);
 
 });
 

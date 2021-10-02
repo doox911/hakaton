@@ -6,7 +6,55 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
-    <title>Поисковая система</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>April</title>
+    <style>
+      html, body, .ipril-container {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .ipril-container {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .ipril-container__item {
+        padding: 2em;
+        margin: 0;
+      }
+
+      .ipril-container__item__title {
+        margin: 0;
+        padding: 0;
+        color: #81D4FA;
+        font-family: 'Press Start 2P', cursive;
+        user-select: none;
+        text-align: center;
+      }
+
+      .blink {
+        animation: blinker 1.5s linear infinite;
+      }
+
+      .hide {
+        opacity: 0;
+        transition: all .5s ease-in-out;
+      }
+
+      @keyframes blinker {
+        50% {
+          color: #03a9f4;
+        }
+      }
+    </style>
   </head>
   <body>
     <noscript>
@@ -15,6 +63,12 @@
       </strong>
     </noscript>
 
+    <div class="ipril-container">
+      <div class="ipril-container__item">
+        <h1 class="ipril-container__item__title">IPRIL</h1>
+        <h1 class="ipril-container__item__title blink">...</h1>
+      </div>
+    </div>
     <div id="app"></div>
   </body>
 </html>
