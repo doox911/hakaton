@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classes\DuckDuckGoArticleSearch;
 use App\Classes\ImagesWikiSearch;
+use App\Classes\RamblerSearch;
 use App\Classes\WikiSearch;
 use App\Classes\YandexSearch;
 use App\Classes\YouTubeSearch;
@@ -36,6 +37,7 @@ class SearchController {
     'yandex' => YandexSearch::class,
     'duck' => DuckDuckGoArticleSearch::class,
     'wiki' => WikiSearch::class,
+    'rambler' => RamblerSearch::class,
   ];
 
   private const audio_searchers = [];
