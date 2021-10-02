@@ -44,11 +44,14 @@ class SearchController {
         foreach (constant($searchers) as $key => $searcher) {
           if (in_array($key, $data['searchers'])) {
             $searcher = new $searcher;
-            $result[$content_type][] = $searcher->search($data['search']);
+            $result[$content_type] = array_merge($result[$content_type], $searcher->search($data['search']));
           }
         }
       } else {
-        $result['custom'][] = (new CustomSearch())->setUrl('https://custom_url.org')->search($data['search']);
+        $result['custom'] = array_merge(
+          $result[$content_type],
+          (new CustomSearch())->setUrl('https://custom_url.org')->search($data['search'])
+        );
       }
     }
 
