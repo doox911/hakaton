@@ -116,8 +116,8 @@
         this.images = [...this.images, ...images];
       },
 
-      goToResource(link) {
-        location.href = link;
+      goToResource(url) {
+        window.open(url, '_blank');
       },
     },
   };
