@@ -12,7 +12,9 @@
         <v-col
           v-for="(article, index) in articles"
           :key="index"
-          cols="3"
+          cols="12"
+          sm="6"
+          md="3"
         >
           <v-card
             :loading="loading"

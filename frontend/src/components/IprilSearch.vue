@@ -4,7 +4,10 @@
       align="center"
       justify="center"
     >
-      <v-col>
+      <v-col
+        cols="12"
+        sm="8"
+      >
         <v-text-field
           :value="value"
           :disabled="loading"

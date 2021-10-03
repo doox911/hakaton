@@ -11,7 +11,9 @@
       <v-col
         v-for="(video, index) in videos"
         :key="index"
-        cols="3"
+        cols="12"
+        sm="6"
+        md="3"
       >
         <v-card
           :loading="loading"

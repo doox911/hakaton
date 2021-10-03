@@ -25,7 +25,9 @@
             v-for="(filter, index) in filters"
             :key="index"
             class="ma-0 pa-0"
-            cols="3"
+            cols="12"
+            sm="6"
+            md="3"
           >
             <v-checkbox
               v-model="selected_filters"
@@ -53,7 +55,9 @@
             v-for="(searcher, index) in searchers"
             :key="index"
             class="ma-0 pa-0"
-            cols="4"
+            cols="12"
+            sm="6"
+            md="4"
           >
             <v-checkbox
               v-model="selected_searchers"
