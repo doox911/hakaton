@@ -42,7 +42,7 @@
 
 ### Linux(Дебиан семейства)
 
- - cd /var/www && git clone git@github.com:doox911/hakaton.git && cd hakaton/
+ - cd /var/www && git clone https://github.com/doox911/hakaton.git && cd hakaton/
  - ``` 
    docker run --rm --interactive --tty \
    --volume $PWD:/app \
@@ -57,7 +57,7 @@
 *Приложение будет доступно на http://0.0.0.0*
 
 ### Mac
- - cd git clone git@github.com:doox911/hakaton.git && cd hakaton/
+ - cd git clone https://github.com/doox911/hakaton.git && cd hakaton/
  - ``` 
     docker run --rm --interactive --tty \
     --volume $PWD:/app \
