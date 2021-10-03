@@ -28,7 +28,7 @@
 
 # Демо
 #### Приложение доступно по адресу: <a href="http://a681-185-9-75-238.ngrok.io">ngrok</a>
-#### Скринкаст доступен по адресу: <a href="https://cloud.mail.ru/public/he3q/btmTfpxL5">screencast</a>
+#### Скринкаст доступен по адресу: <a href="https://disk.yandex.ru/i/stguiIqQwPivjA">screencast</a>
 
 # Требования
 ### Вариант 1
