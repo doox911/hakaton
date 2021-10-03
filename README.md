@@ -31,16 +31,17 @@
 #### Скринкаст доступен по адресу: <a href="https://disk.yandex.ru/i/stguiIqQwPivjA">screencast</a>
 
 # Требования
-### Вариант 1
-#### 1.docker && docker-compose;
-### Вариант 2
-#### 1.web-сервер с поддержкой PHP(версия 8.0+) интерпретации (apache, nginx);
-#### 2.composer (версия 2.0+);
-#### 3.npm (версия 7.0+);
+## Вариант 1
+ - docker && docker-compose;
+## Вариант 2
+ - web-сервер с поддержкой PHP(версия 8.0+) интерпретации (apache, nginx);
+ - composer (версия 2.0+);
+ - NodeJs, npm (версия 7.0+);
 
 # Инструкция по установке
 
 ### Linux(Дебиан семейства)
+
  - cd /var/www && git clone git@github.com:doox911/hakaton.git && cd hakaton/
  - ``` 
    docker run --rm --interactive --tty \
@@ -50,30 +51,25 @@
  - `cd frontend`
  - `npm install`
  - `npm run build`
- - `cd .. && ./vendor/bin/sail up`
+ - `cd .. && cp .env.example .env`
+ - `./vendor/bin/sail up`
 
 *Приложение будет доступно на http://0.0.0.0*
 
-#### 1) cd /var/www && git clone https://github.link.com iprill && cd iprill/
-#### 2) composer install
-#### 3) cd frontend/ && npm install
-#### 4) Установить докер, там всё по инструкции с офф.сайта. 
-> пункты 5-7 для пользователей windows
-#### 5) Если у тебя винда то нужно в магазине приложений винды установить Ubuntu, для этого нужно в поиске написать linux и выбрать убунту.
-#### 6) Установить ubuntu дистрибутивом по умолчанию
-   * wsl -s НАЗВАНИЕ_СИСТЕМЫ
-   * убедиться можно через wsl -l
-   * https://stackoverflow.com/a/65513584
-#### 7) Запустить команду ./vendor/bin/sail up (windows - wsl && ./vendor/bin/sail up)
-#### 8) cp .env.example .env
-#### 9) php artisan key:generate
+### Mac
+ - cd git clone git@github.com:doox911/hakaton.git && cd hakaton/
+ - ``` 
+    docker run --rm --interactive --tty \
+    --volume $PWD:/app \
+    composer install
+   ```
+ - `cd frontend`
+ - `npm install`
+ - `npm run build`
+ - `cd .. && cp .env.example .env`
+ - `./vendor/bin/sail up`
 
 ## РАЗРАБОТЧИКИ
 #### Поляков Андрей frontend https://t.me/Doox911
 #### Карчевский Алексей fullstack https://t.me/AlexKar
 #### Альметов Родион fullstack https://t.me/radar4ick
-
-
-
-
-
