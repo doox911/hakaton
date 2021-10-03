@@ -39,6 +39,21 @@
 #### 3.npm (версия 7.0+);
 
 # Инструкция по установке
+
+### Linux(Дебиан семейства)
+ - cd /var/www && git clone git@github.com:doox911/hakaton.git && cd hakaton/
+ - ``` 
+   docker run --rm --interactive --tty \
+   --volume $PWD:/app \
+   composer install
+   ```
+ - `cd frontend`
+ - `npm install`
+ - `npm run build`
+ - `cd .. && ./vendor/bin/sail up`
+
+*Приложение будет доступно на http://0.0.0.0*
+
 #### 1) cd /var/www && git clone https://github.link.com iprill && cd iprill/
 #### 2) composer install
 #### 3) cd frontend/ && npm install
